@@ -17,5 +17,6 @@ public class FIO {
 
         var f4 = new ru.yura.people.FIO("Иван",null,null);
         Assert.assertEquals("Иван", f4.toString());
+
     }
 }

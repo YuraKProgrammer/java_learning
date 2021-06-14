@@ -5,7 +5,7 @@ public class Person {
 
     public Person(PersonName name){
         if (name==null)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Должно быть имя");
         this.name=name;
     }
 
