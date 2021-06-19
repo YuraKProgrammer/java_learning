@@ -1,6 +1,8 @@
 package ru.yura.people;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,25 +35,26 @@ public class PeopleFactory {
         fstNames=fstN.keySet().toArray(new String[0]);
     }
 
-    public List<Person> create(int count){
-        var persons = new ArrayList<Person>();
-            for (var i=0; i<count; i++){
-                var f = createFio();
-                var g = fstN.get(f.getFirstName()); // Пол определяется через ключ элемента массива
-                var p = new Person(f, g);
-                p.setCountry(getRandomCountry());
-                var birthdate = createBirthDate();
-                p.setBirthDate(birthdate);
-                persons.add(p);
-            }
+    public List<Person> create(int count) {
+        var persons = new ArrayList<Person>(count);
+        for (var i = 0; i < count; i++) {
+            var f = createFio();
+            var g = fstN.get(f.getFirstName()); // Пол определяется через ключ элемента массива
+            var p = new Person(f, g);
+            p.setCountry(getRandomCountry());
+            var birthdate = createBirthDate();
+            p.setBirthDate(birthdate);
+            persons.add(p);
+        }
         return persons;
     }
 
     private DateTime createBirthDate() {
         var fd = 1921 + (int)Math.floor(random()*100);
         var sd = 1 + (int)Math.floor(random()*12);
-        var td = 1 + (int)Math.floor(random()*28);
-        return new DateTime(fd,sd,td,0,0,0);
+        var td = 1 + (int)Math.floor(random()*27);
+        var d = new LocalDate(fd,sd,td);
+        return d.toDateTimeAtStartOfDay();
     }
 
     private FIO createFio() {
