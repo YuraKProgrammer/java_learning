@@ -1,7 +1,23 @@
 package ru.yura.people;
 
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
 public class Person {
     private PersonName name;
+
+    public int getAge(){
+        var now = new DateTime();
+        var i = new Interval(birthDate, now);
+        var days = i.toDuration().getStandardDays();
+        return (int)(days/365);
+    }
+
+    public DateTime getBirthDate() {
+        return birthDate;
+    }
+
+    private DateTime birthDate;
 
     public Country getCountry() {
         return country;
@@ -34,7 +50,11 @@ public class Person {
     @Override
     public String toString(){
         if (country!=null)
-            return name+", "+country;
-        return name.toString();
+            return name+", "+gender+", "+getAge()+", "+country;
+        return name.toString()+", "+getAge()+", "+gender;
+    }
+
+    public void setBirthDate(DateTime birthDate) {
+        this.birthDate=birthDate;
     }
 }

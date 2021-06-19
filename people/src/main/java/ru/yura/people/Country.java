@@ -12,5 +12,13 @@ public enum Country {
     /**
      * Франция
      */
-    France
+    France,
+    Japan,
+    Spain,
+    Italy,
+    India,
+    Mongolia,
+    Canada,
+    Egypt,
+    Australia
 }
