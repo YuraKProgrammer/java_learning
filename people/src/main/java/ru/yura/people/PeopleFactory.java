@@ -1,13 +1,13 @@
 package ru.yura.people;
 
-import com.sun.tools.attach.AgentInitializationException;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import static java.lang.Math.random;
+import java.util.Random;
+
 
 public class PeopleFactory {
     private final String[] mleNames = new String[]{"Мазилов(а)","Иванов(а)","Петров(а)","Кот","Сергеев(а)","Сидоров(а)"};
@@ -26,7 +26,7 @@ public class PeopleFactory {
     private final HashMap<String,Gender> eeN;
     private final String[] eeNames;
 
-    private int rn;
+    private Random random=new Random();
 
     public PeopleFactory() {
         fstN = new HashMap<>();
@@ -71,13 +71,13 @@ public class PeopleFactory {
         for (var i = 0; i < count; i++) {
             var f = createFio();
             Gender g = Gender.Male;
-            if(rn==1) {
+            if (f.getClass()==FIO.class) {
                 g = fstN.get(f.getFirstName()); // Пол определяется через ключ элемента массива
             }
-            if (rn==2){
+            if (f.getClass()==IndiecName.class){
                 g = ieFstN.get(f.getFirstName());
             }
-            if (rn==3){
+            if (f.getClass()==IndeecName.class){
                 g = eeN.get(f.getFirstName());
             }
             var p = new Person(f, g);
@@ -90,43 +90,41 @@ public class PeopleFactory {
     }
 
     private DateTime createBirthDate() {
-        var fd = 1921 + (int)Math.floor(random()*100);
-        var sd = 1 + (int)Math.floor(random()*12);
-        var td = 1 + (int)Math.floor(random()*27);
+        var fd = 1921 + random.nextInt(100);
+        var sd = 1 + random.nextInt(12);
+        var td = 1 + random.nextInt(27);
         var d = new LocalDate(fd,sd,td);
         return d.toDateTimeAtStartOfDay();
     }
 
+    private String GetRandomString(String[] values){
+        var k = random.nextInt(values.length);
+        return values[k];
+    }
+
     private PersonName createFio() {
-        var rnd = (int)Math.floor(random()*4);
-        if (rnd==0 || rnd==1) {
-            rn=1;
-            var n1 = (int) Math.floor(random() * fstNames.length);
-            var n2 = (int) Math.floor(random() * mleNames.length);
-            var n3 = (int) Math.floor(random() * lstNames.length);
-            return new FIO(fstNames[n1], mleNames[n2], lstNames[n3]);
+        switch (random.nextInt(4)){
+            case 0:
+            case 1:
+                return new FIO(GetRandomString(fstNames), GetRandomString(mleNames), GetRandomString(lstNames));
+            case 2:
+                var n1 = GetRandomString(ieFstNames);
+                var n2 = GetRandomString(ieSecNames);
+                var n3 = GetRandomString(ieThirNames);
+                var n4 = GetRandomString(ieFourNames);
+                var n5 = GetRandomString(ieFifNames);
+                var n6 = GetRandomString(ieSixNames);
+                return new IndiecName(n1,n2,n3,n4,n5,n6);
+            case 3:
+                return new IndeecName(GetRandomString(eeNames));
+            default:
+                throw new RuntimeException();
         }
-        if (rnd==2){
-            rn=2;
-            var ie1 = (int)Math.floor(random()*ieFstNames.length);
-            var ie2 = (int)Math.floor(random()*ieSecNames.length);
-            var ie3 = (int)Math.floor(random()*ieThirNames.length);
-            var ie4 = (int)Math.floor(random()*ieFourNames.length);
-            var ie5 = (int)Math.floor(random()*ieFifNames.length);
-            var ie6 = (int)Math.floor(random()*ieSixNames.length);
-            return new IndiecName(ieFstNames[ie1],ieSecNames[ie2],ieThirNames[ie3],ieFourNames[ie4],ieFifNames[ie5],ieSixNames[ie6]);
-        }
-        if (rnd==3){
-            rn=3;
-            var ee = (int)Math.floor(random()*eeNames.length);
-            return new IndeecName(eeNames[ee]);
-        }
-        return null;
     }
 
     private Country getRandomCountry(){
         var countries = Country.values();
-        var k = (int)Math.floor(random()*countries.length);
+        var k = random.nextInt(countries.length);
         return countries[k];
     }
 }

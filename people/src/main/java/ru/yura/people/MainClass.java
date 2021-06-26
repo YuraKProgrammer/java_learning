@@ -3,10 +3,16 @@ package ru.yura.people;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 public class MainClass {
     public static void main(String[] args) {
+        /*
+        Object v2 = 123;
+        if (v2.getClass()==Integer.class)
+            System.out.println(v2);
+        */
         var factory = new PeopleFactory();
         var startTime = System.nanoTime();
         var persons = factory.create(10_000);
@@ -47,70 +53,22 @@ public class MainClass {
         System.out.println(list.get(list.size()-5));
     }
     private static void printCountries50AgeMans(List<Person> people){
-        var list = new ArrayList<Person>();
-        var cRus=0;
-        var cUSA=0;
-        var cChi=0;
-        var cEng=0;
-        var cGer=0;
-        var cFra=0;
-        var cJap=0;
-        var cSpa=0;
-        var cIta=0;
-        var cInd=0;
-        var cMon=0;
-        var cCan=0;
-        var cEgy=0;
-        var cAus=0;
+        var map = new HashMap<Country, Integer>();
         for (var p: people){
             if(p.getGender()==Gender.Male){
                 if(p.getAge()>50){
-                    if(p.getCountry()==Country.Russia)
-                        cRus++;
-                    if(p.getCountry()==Country.USA)
-                        cUSA++;
-                    if(p.getCountry()==Country.China)
-                        cChi++;
-                    if(p.getCountry()==Country.England)
-                        cEng++;
-                    if(p.getCountry()==Country.Germany)
-                        cGer++;
-                    if(p.getCountry()==Country.France)
-                        cFra++;
-                    if(p.getCountry()==Country.Japan)
-                        cJap++;
-                    if(p.getCountry()==Country.Spain)
-                        cSpa++;
-                    if(p.getCountry()==Country.Italy)
-                        cIta++;
-                    if(p.getCountry()==Country.India)
-                        cInd++;
-                    if(p.getCountry()==Country.Mongolia)
-                        cMon++;
-                    if(p.getCountry()==Country.Canada)
-                        cCan++;
-                    if(p.getCountry()==Country.Egypt)
-                        cEgy++;
-                    if(p.getCountry()==Country.Australia)
-                        cAus++;
+                    var c = p.getCountry();
+                    if (map.containsKey(c))
+                        map.replace(c, map.get(c)+1);
+                    else
+                        map.put(c,1);
                 }
             }
         }
         System.out.println("Количество мужчин старше 50 лет:");
-        System.out.println("Россия - "+cRus);
-        System.out.println("США - "+cUSA);
-        System.out.println("Китай - "+cChi);
-        System.out.println("Англия - "+cEng);
-        System.out.println("Германия - "+cGer);
-        System.out.println("Франция - "+cFra);
-        System.out.println("Япония - "+cJap);
-        System.out.println("Исания - "+cSpa);
-        System.out.println("Италия - "+cIta);
-        System.out.println("Индий - "+cInd);
-        System.out.println("Монголия - "+cMon);
-        System.out.println("Канада - "+cCan);
-        System.out.println("Египет - "+cEgy);
-        System.out.println("Австралия - "+cAus);
+        for (var c: map.keySet()) {
+            System.out.println(c+" - "+map.get(c));
+        }
     }
     private static void printWhoMore1060(List<Person> people){
         var cMale = 0;
