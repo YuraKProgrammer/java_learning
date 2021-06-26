@@ -11,7 +11,7 @@ public class IndiecName extends PersonName {
         this.fifthName = fifthName;
         this.sixthName = sixthName;
     }
-
+    @Override
     public String getFirstName() {
         return firstName;
     }

@@ -1,7 +1,8 @@
 package ru.yura.people;
 
 public class IndeecName extends PersonName{
-    public String getName() {
+    @Override
+    public String getFirstName() {
         return name;
     }
 

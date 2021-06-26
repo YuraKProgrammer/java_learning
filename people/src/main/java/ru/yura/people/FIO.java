@@ -10,7 +10,7 @@ public class FIO extends PersonName{
         this.middleName = middleName;
         this.lastName = lastName;
     }
-
+    @Override
     public String getFirstName() {
         return firstName;
     }

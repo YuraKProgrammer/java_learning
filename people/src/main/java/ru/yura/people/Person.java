@@ -38,9 +38,9 @@ public class Person {
     public Person(PersonName name, Gender gender){
         if (name==null)
             throw new IllegalArgumentException("Должно быть имя");
+        this.name=name;
         if (gender==null)
             throw new IllegalArgumentException("Должен быть пол");
-        this.name=name;
         this.gender=gender;
     }
 
