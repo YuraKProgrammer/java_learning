@@ -97,26 +97,22 @@ public class PeopleFactory {
         return d.toDateTimeAtStartOfDay();
     }
 
-    private String GetRandomString(String[] values){
-        var k = random.nextInt(values.length);
-        return values[k];
-    }
 
     private PersonName createFio() {
         switch (random.nextInt(4)){
             case 0:
             case 1:
-                return new FIO(GetRandomString(fstNames), GetRandomString(mleNames), GetRandomString(lstNames));
+                return new FIO(getRandom(fstNames), getRandom(mleNames), getRandom(lstNames));
             case 2:
-                var n1 = GetRandomString(ieFstNames);
-                var n2 = GetRandomString(ieSecNames);
-                var n3 = GetRandomString(ieThirNames);
-                var n4 = GetRandomString(ieFourNames);
-                var n5 = GetRandomString(ieFifNames);
-                var n6 = GetRandomString(ieSixNames);
+                var n1 = getRandom(ieFstNames);
+                var n2 = getRandom(ieSecNames);
+                var n3 = getRandom(ieThirNames);
+                var n4 = getRandom(ieFourNames);
+                var n5 = getRandom(ieFifNames);
+                var n6 = getRandom(ieSixNames);
                 return new IndiecName(n1,n2,n3,n4,n5,n6);
             case 3:
-                return new IndeecName(GetRandomString(eeNames));
+                return new IndeecName(getRandom(eeNames));
             default:
                 throw new RuntimeException();
         }
@@ -124,7 +120,11 @@ public class PeopleFactory {
 
     private Country getRandomCountry(){
         var countries = Country.values();
-        var k = random.nextInt(countries.length);
-        return countries[k];
+        return getRandom(countries);
+    }
+
+    private <T> T getRandom(T[] values){
+        var k = random.nextInt(values.length);
+        return values[k];
     }
 }

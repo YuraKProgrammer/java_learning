@@ -3,7 +3,7 @@ package ru.yura.people.tests;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FIO {
+public class FIO_Tests {
     @Test
     public void toString_Test(){
         var f = new ru.yura.people.FIO("Иван","Иванович","Иванов");
